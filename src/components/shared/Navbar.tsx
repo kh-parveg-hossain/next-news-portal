@@ -25,11 +25,13 @@ const Navbar = () => {
   };
 
   return (
-    <header className={`sticky top-0 z-50 py-4 shadow-md bg-white ${isDark ? "dark" : ""}`}>
+    <header className={`sticky top-0 z-50 py-4 shadow-md bg-white dark:bg-gray-900 dark:text-white`}>
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <div className="font-bold text-xl">
-          <Link href="/">Daily News</Link>
+          <Link href="/" className="dark:text-white">
+            Daily News
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
@@ -37,18 +39,18 @@ const Navbar = () => {
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <Link href="/news" className={`${pathname === "/news" ? "text-red-500 font-semibold" : ""}`}>
+                <Link href="/news" className={`${pathname === "/news" ? "text-red-500 font-semibold" : "dark:text-white"}`}>
                   News
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger className={`${pathname === "/services" ? "text-red-500 font-semibold" : ""}`}>
+              <NavigationMenuTrigger className={`${pathname === "/services" ? "text-red-500 font-semibold" : "dark:text-white"}`}>
                 Services
               </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="text-gray-600 rounded-md px-5 py-4 space-y-2">
+              <NavigationMenuContent className="dark:bg-gray-800 dark:text-white">
+                <ul className="rounded-md px-5 py-4 space-y-2">
                   <li>
                     <NavigationMenuLink asChild>
                       <Link href="/web-development">Web Development</Link>
@@ -70,7 +72,7 @@ const Navbar = () => {
 
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <Link href="/about" className={`${pathname === "/about" ? "text-red-500 font-semibold" : ""}`}>
+                <Link href="/about" className={`${pathname === "/about" ? "text-red-500 font-semibold" : "dark:text-white"}`}>
                   About
                 </Link>
               </NavigationMenuLink>
@@ -78,7 +80,7 @@ const Navbar = () => {
 
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <Link href="/contact" className={`${pathname === "/contact" ? "text-red-500 font-semibold" : ""}`}>
+                <Link href="/contact" className={`${pathname === "/contact" ? "text-red-500 font-semibold" : "dark:text-white"}`}>
                   Contact
                 </Link>
               </NavigationMenuLink>
@@ -89,7 +91,7 @@ const Navbar = () => {
         {/* Dark Mode & Login Button */}
         <div className="hidden lg:flex items-center space-x-4">
           <div onClick={toggleTheme} className="flex items-center cursor-pointer">
-            <span className="mr-2">Dark mode</span>
+            <span className="mr-2 dark:text-white">Dark mode</span>
             <Switch />
           </div>
           <Button className="ml-4" variant="default">
@@ -99,9 +101,48 @@ const Navbar = () => {
 
         {/* Mobile Menu Toggle */}
         <div className="lg:hidden">
-          <button onClick={toggleMenu}>{isOpen ? <AiOutlineClose /> : <AiOutlineMenu />}</button>
+          <button onClick={toggleMenu} className="dark:text-white">
+            {isOpen ? <AiOutlineClose size={24} /> : <AiOutlineMenu size={24} />}
+          </button>
         </div>
       </nav>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="lg:hidden bg-white dark:bg-gray-800 dark:text-white shadow-md absolute top-16 left-0 w-full py-4 px-6">
+          <ul className="space-y-4">
+            <li>
+              <Link href="/news" className={`${pathname === "/news" ? "text-red-500 font-semibold" : ""}`} onClick={toggleMenu}>
+                News
+              </Link>
+            </li>
+            <li>
+              <Link href="/services" className={`${pathname === "/services" ? "text-red-500 font-semibold" : ""}`} onClick={toggleMenu}>
+                Services
+              </Link>
+            </li>
+            <li>
+              <Link href="/about" className={`${pathname === "/about" ? "text-red-500 font-semibold" : ""}`} onClick={toggleMenu}>
+                About
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact" className={`${pathname === "/contact" ? "text-red-500 font-semibold" : ""}`} onClick={toggleMenu}>
+                Contact
+              </Link>
+            </li>
+            <li className="flex items-center justify-between">
+              <span>Dark mode</span>
+              <Switch onClick={toggleTheme} />
+            </li>
+            <li>
+              <Button variant="default" className="w-full" onClick={toggleMenu}>
+                Login
+              </Button>
+            </li>
+          </ul>
+        </div>
+      )}
     </header>
   );
 };
